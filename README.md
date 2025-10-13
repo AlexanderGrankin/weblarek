@@ -98,3 +98,112 @@ Presenter - презентер содержит основную логику п
 `emit<T extends object>(event: string, data?: T): void` - инициализация события. При вызове события в метод передается название события и объект с данными, который будет использован как аргумент для вызова обработчика.  
 `trigger<T extends object>(event: string, context?: Partial<T>): (data: T) => void` - возвращает функцию, при вызове которой инициализируется требуемое в параметрах событие с передачей в него данных из второго параметра.
 
+### Данные
+В приложении используются две сущности:
+- товар
+- покупатель
+
+#### Интерфейс товара
+```
+interface IProduct {
+  id: string; //номер товара
+  description: string; //описание товара
+  image: string; //изображение товара
+  title: string; //название товара
+  category: string; //категория товара
+  price: number | null; //цена (может быть null, если товар бесплатный)
+}
+```
+
+#### Интерфейс покупателя
+```
+interface IBuyer {
+  payment: TPayment; //тип оплаты
+  email: string; //e-mail покупателя
+  phone: string; //телефон покупателя
+  address: string; //адрес покупателя
+}
+```
+
+### Модели данных
+#### Каталог товаров
+Класс ProductCatalog предназначен для хранения каталога товаров
+
+Поля класса:
+`products: IProduct[]` для хранениея массива всех товаров
+`selectedProduct: IProduct | null` для хранения товара для отображения
+
+Методы:
+`setProducts(products: IProduct[]): void` для сохранения массива товаров
+`getProducts(): IProduct[]` для получения массивов товаров из модели
+`getProductById(id: string): IProduct | null` для получения товара по id
+`setSelectedProduct(product: IProduct): void` для сохранения товара
+`getSelectedProduct(): IProduct | null` для получения товара для подробного отображения
+
+#### Корзина
+Класс Cart предназначен для хранения массива товаров, выбранных покупателем для покупки
+
+Класс содержит одно поле:
+`products: IProduct[]` для хранения товаров в корзине у покупателя
+
+Методы:
+
+`getProducts(): IProduct[]` для получения товаров в корзине
+`addProduct(product: IProduct): void` для добавления товара в корзину
+`removeProduct(product: IProduct): void` для удаления товара из корзины
+`clear(): void` для полной очистки корзины
+`getTotalPrice(): number` для получения стоимости товаров, находящихся в корзине
+`getProductsCount(): number` для получения количества товаров в корзине
+`hasProduct(productId: string): boolean` для проверки наличия товара в корзине
+
+#### Покупатель
+Класс Buyer предназначен для хранения данных, которые покупатель вводит в форму оплаты
+
+Поля класса:
+`payment: TPayment | null`
+`address: string`
+`phone: string`
+`email: string`
+
+Методы:
+`setData(data: Partial<IBuyer>) :void` для сохранения данных в модели
+`getData(): { payment: TPayment | null; email: string | null; phone: string | null; address: string | null }` для получения всех данных покупателя
+`clear(): void` для очистки данных покупателя
+`validate(): { isValid: boolean; errors: Record<string, string> }` для валидации поля 
+
+### Слой коммуникации
+Класс Communication выполняет запрос на сервер и получает объект с товарами
+
+Методы:
+`getData(): Promise<ICatalogResult>` - выполняет запрос на сервер и возвращает массив товаров
+`postData(order: IOrder): Promise<IOrderResult>` - получает результат заказа (номера товаров, общая сумма заказа)
+
+Интерфейсы:
+
+- для каталога, который получаем с сервера:
+```
+interface ICatalogResult {
+  total: number;    
+  items: IProduct[];  
+}
+```
+
+- для заказа, в котором содержатся данные, введенные пользователем:
+```
+interface IOrder {
+  payment: TPayment;
+  email: string;
+  phone: string;
+  address: string;
+  total: number;
+  items: string[];   
+}
+```
+
+- для результата заказа, который возвращает сервер:
+```
+interface IOrderResult {
+  id: string;
+  total: number, 
+}
+```
