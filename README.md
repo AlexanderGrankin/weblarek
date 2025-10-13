@@ -130,53 +130,53 @@ interface IBuyer {
 Класс ProductCatalog предназначен для хранения каталога товаров
 
 Поля класса:
-`products: IProduct[]` для хранениея массива всех товаров
-`selectedProduct: IProduct | null` для хранения товара для отображения
+- `products: IProduct[]` для хранениея массива всех товаров
+- `selectedProduct: IProduct | null` для хранения товара для отображения
 
 Методы:
-`setProducts(products: IProduct[]): void` для сохранения массива товаров
-`getProducts(): IProduct[]` для получения массивов товаров из модели
-`getProductById(id: string): IProduct | null` для получения товара по id
-`setSelectedProduct(product: IProduct): void` для сохранения товара
-`getSelectedProduct(): IProduct | null` для получения товара для подробного отображения
+- `setProducts(products: IProduct[]): void` для сохранения массива товаров
+- `getProducts(): IProduct[]` для получения массивов товаров из модели
+- `getProductById(id: string): IProduct | null` для получения товара по id
+- `setSelectedProduct(product: IProduct): void` для сохранения товара
+- `getSelectedProduct(): IProduct | null` для получения товара для подробного отображения
 
 #### Корзина
 Класс Cart предназначен для хранения массива товаров, выбранных покупателем для покупки
 
 Класс содержит одно поле:
-`products: IProduct[]` для хранения товаров в корзине у покупателя
+- `products: IProduct[]` для хранения товаров в корзине у покупателя
 
 Методы:
 
-`getProducts(): IProduct[]` для получения товаров в корзине
-`addProduct(product: IProduct): void` для добавления товара в корзину
-`removeProduct(product: IProduct): void` для удаления товара из корзины
-`clear(): void` для полной очистки корзины
-`getTotalPrice(): number` для получения стоимости товаров, находящихся в корзине
-`getProductsCount(): number` для получения количества товаров в корзине
-`hasProduct(productId: string): boolean` для проверки наличия товара в корзине
+- `getProducts(): IProduct[]` для получения товаров в корзине
+- `addProduct(product: IProduct): void` для добавления товара в корзину
+- `removeProduct(product: IProduct): void` для удаления товара из корзины
+- `clear(): void` для полной очистки корзины
+- `getTotalPrice(): number` для получения стоимости товаров, находящихся в корзине
+- `getProductsCount(): number` для получения количества товаров в корзине
+- `hasProduct(productId: string): boolean` для проверки наличия товара в корзине
 
 #### Покупатель
 Класс Buyer предназначен для хранения данных, которые покупатель вводит в форму оплаты
 
 Поля класса:
-`payment: TPayment | null`
-`address: string`
-`phone: string`
-`email: string`
+- `payment: TPayment | null`
+- `address: string`
+- `phone: string`
+- `email: string`
 
 Методы:
-`setData(data: Partial<IBuyer>) :void` для сохранения данных в модели
-`getData(): { payment: TPayment | null; email: string | null; phone: string | null; address: string | null }` для получения всех данных покупателя
-`clear(): void` для очистки данных покупателя
-`validate(): { isValid: boolean; errors: Record<string, string> }` для валидации поля 
+- `setData(data: Partial<IBuyer>) :void` для сохранения данных в модели
+- `getData(): { payment: TPayment | null; email: string | null; phone: string | null; address: string | null }` для получения всех данных покупателя
+- `clear(): void` для очистки данных покупателя
+- `validate(): { isValid: boolean; errors: Record<string, string> }` для валидации поля 
 
 ### Слой коммуникации
 Класс Communication выполняет запрос на сервер и получает объект с товарами
 
 Методы:
-`getData(): Promise<ICatalogResult>` - выполняет запрос на сервер и возвращает массив товаров
-`postData(order: IOrder): Promise<IOrderResult>` - получает результат заказа (номера товаров, общая сумма заказа)
+- `getData(): Promise<ICatalogResult>` - выполняет запрос на сервер и возвращает массив товаров
+- `postData(order: IOrder): Promise<IOrderResult>` - получает результат заказа (номера товаров, общая сумма заказа)
 
 Интерфейсы:
 
