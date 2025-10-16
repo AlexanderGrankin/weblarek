@@ -7,10 +7,17 @@ export class Buyer{
   email: string = ""
 
   setData(data: Partial<IBuyer>) :void {
-    if (data.payment !== undefined) this.payment = data.payment;
-    if (data.address !== undefined) this.address = data.address;
-    if (data.phone !== undefined) this.phone = data.phone;
-    if (data.email !== undefined) this.email = data.email;
+    if (data.payment !== undefined) 
+      this.payment = data.payment;
+
+    if (data.address !== undefined) 
+      this.address = data.address;
+
+    if (data.phone !== undefined) 
+      this.phone = data.phone;
+
+    if (data.email !== undefined) 
+      this.email = data.email;
   }
 
   getData(): { payment: TPayment | null; email: string | null; phone: string | null; address: string | null } {
