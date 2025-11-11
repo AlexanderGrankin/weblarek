@@ -113,34 +113,34 @@ events.on('preview:button-click', (data: { id: string }) => {
 
 // Открытие корзины
 events.on('basket:open', () => {
-    const basketProducts = basket.getProducts()
-    const basketItems: HTMLElement[] = []
+    // const basketProducts = basket.getProducts()
+    // const basketItems: HTMLElement[] = []
 
-    basketProducts.map((product, index) => {
-        const card = new CardBasket(cloneTemplate(cardBasketTemplate), events);
-        const cardElement = card.render({
-            id: product.id,
-            title: product.title,
-            price: product.price,
-            basketIndex: index + 1
-        });
-        basketItems.push(cardElement)
-    })
+    // basketProducts.map((product, index) => {
+    //     const card = new CardBasket(cloneTemplate(cardBasketTemplate), events);
+    //     const cardElement = card.render({
+    //         id: product.id,
+    //         title: product.title,
+    //         price: product.price,
+    //         basketIndex: index + 1
+    //     });
+    //     basketItems.push(cardElement)
+    // })
 
-    const basketElement = basketView.render({
-        items: basketItems,
-        total: basket.getTotalPrice(),
-    });
+    // const basketElement = basketView.render({
+    //     items: basketItems,
+    //     total: basket.getTotalPrice(),
+    // });
 
-    modal.open(basketElement);
+    modal.open(basketView.render());
 })
 
 // Изменение содержимого корзины
 events.on('basket:changed', () => {
     header.counter = basket.getProductsCount();
 
-        const contentType = modal.getCurrentContent();
-        if (contentType && contentType.includes('basket')) {
+        // const contentType = modal.getCurrentContent();
+        // if (contentType && contentType.includes('basket')) {
             const basketProducts = basket.getProducts();
             const basketItems: HTMLElement[] = [];
 
@@ -155,13 +155,13 @@ events.on('basket:changed', () => {
                 basketItems.push(cardElement);
             });
 
-            const basketElement = basketView.render({
+            basketView.render({
                 items: basketItems,
                 total: basket.getTotalPrice(),
             });
 
-            modal.setContent(basketElement); 
-        }
+            //modal.setContent(basketElement); 
+        //}
     
 })
 
