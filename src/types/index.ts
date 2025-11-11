@@ -1,5 +1,15 @@
 export type ApiPostMethods = 'POST' | 'PUT' | 'DELETE';
 
+export type TItemCategory = 'софт-скил' | 'хард-скил' | 'другое' | 'кнопка' | 'дополнительное';
+
+export const categoryType: Record<TItemCategory, string> = {
+  'софт-скил': 'soft',
+  'хард-скил': 'hard',
+  'другое': 'other',
+  'кнопка': 'button',
+  'дополнительное': 'additional',
+}
+
 export interface IApi {
     get<T extends object>(uri: string): Promise<T>;
     post<T extends object>(uri: string, data: object, method?: ApiPostMethods): Promise<T>;
@@ -39,5 +49,8 @@ export interface IOrder {
 
 export interface IOrderResult {
   id: string;
-  total: number, 
+  total: number
 }
+
+
+

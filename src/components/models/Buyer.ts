@@ -1,10 +1,15 @@
 import { IBuyer, TPayment } from "../../types/index";
+import { IEvents } from "../base/Events";
 
 export class Buyer{
   payment: TPayment | null = null;
   address: string = "";
   phone: string = ""
   email: string = ""
+
+  constructor(private events: IEvents) {
+    this.events = events;
+  }
 
   setData(data: Partial<IBuyer>) :void {
     if (data.payment !== undefined) 
@@ -18,6 +23,8 @@ export class Buyer{
 
     if (data.email !== undefined) 
       this.email = data.email;
+
+    this.events.emit('Buyer:changed', this.getData());
   }
 
   getData(): { payment: TPayment | null; email: string | null; phone: string | null; address: string | null } {
@@ -34,25 +41,27 @@ export class Buyer{
     this.email = "";
     this.phone = "";
     this.address = "";
+
+    this.events.emit('Buyer:changed', this.getData());
   }
 
   validate(): { isValid: boolean; errors: Record<string, string> }{
     const errors: Record<string, string> = {};
 
     if (!this.payment) {
-      errors.payment = 'Выберите тип оплаты';
+      errors.payment = 'Необходимо указать тип оплаты';
     }
 
     if (!this.email) {
-      errors.email = 'Укажите адрес эл.почты';
+      errors.email = 'Необходимо указать адрес эл.почты';
     }
 
     if (!this.phone) {
-      errors.phone = 'Укажите номер телефона';
+      errors.phone = 'Необходимо указать номер телефона';
     }
 
     if (!this.address) {
-      errors.address = 'Укажите ваш адрес';
+      errors.address = 'Необходимо указать адрес';
     }
 
     return {
