@@ -59,6 +59,7 @@ const header = new Header(events, ensureElement<HTMLElement>('.header'))
 const formOrder = new FormOrder(cloneTemplate(orderTemplate), events);
 const formContacts = new FormContacts(cloneTemplate(contactsTemplate), events)
 const success = new Success(cloneTemplate(successTemplate), events)
+const cardPreview = new CardPreview(cloneTemplate(cardPreviewTemplate), events);
 
 // ----- События -----
 // Загрузка каталога
@@ -87,7 +88,7 @@ events.on('catalog:product-selected', () => {
     const selectedProduct = productCatalog.getSelectedProduct()
 
     if(selectedProduct){
-        const cardPreview = new CardPreview(cloneTemplate(cardPreviewTemplate), events);
+        
         const inCart = basket.hasProduct(selectedProduct.id);
         const cardPreviewElement = cardPreview.render(selectedProduct, inCart);
         modal.open(cardPreviewElement);
@@ -138,7 +139,6 @@ events.on('basket:open', () => {
 events.on('basket:changed', () => {
     header.counter = basket.getProductsCount();
 
-    if (modal.isModalOpen()) {
         const contentType = modal.getCurrentContent();
         if (contentType && contentType.includes('basket')) {
             const basketProducts = basket.getProducts();
@@ -162,7 +162,7 @@ events.on('basket:changed', () => {
 
             modal.setContent(basketElement); 
         }
-    }
+    
 })
 
 // Удаление Товара из корзины
@@ -261,24 +261,18 @@ events.on('contacts:submit', async () => {
                 });
                 modal.open(successModal);
                 console.log(result)
+
+                basket.clear();
+                buyer.clear();
+                header.counter = 0; 
             } else {
                 formContacts.errors = 'Ошибка при создании заказа';
             }
+
         }
         catch(err){
             formContacts.errors = "Ошибка при отправке заказа:", err
-        }
-
-        const successForm = success.render({
-            total: basket.getTotalPrice()
-        });
-
-        modal.open(successForm);
-
-        basket.clear();
-        buyer.clear();
-        header.counter = 0; 
-
+        }    
     } else {
         formContacts.errors = Object.values(validation.errors).join(', ');
     }

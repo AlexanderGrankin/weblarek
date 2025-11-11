@@ -37,9 +37,9 @@ export class BasketView extends Component<IBasketView> {
         this.buttonElement.disabled = count === 0;
     }
 
-    render(data: IBasketView): HTMLElement {
-        this.items = data.items;
-        this.total = data.total;
-        return this.container;
-    }
+    // render(data: IBasketView): HTMLElement {
+    //     this.items = data.items;
+    //     this.total = data.total;
+    //     return this.container;
+    // }
 }
