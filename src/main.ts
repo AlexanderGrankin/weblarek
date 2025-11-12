@@ -113,41 +113,19 @@ events.on('preview:button-click', (data: { id: string }) => {
 
 // Открытие корзины
 events.on('basket:open', () => {
-    // const basketProducts = basket.getProducts()
-    // const basketItems: HTMLElement[] = []
+    // const basketProducts = basket.getProducts();
 
-    // basketProducts.map((product, index) => {
+    // const basketItems = basketProducts.map((product, index) => {
     //     const card = new CardBasket(cloneTemplate(cardBasketTemplate), events);
-    //     const cardElement = card.render({
+    //     return card.render({
     //         id: product.id,
     //         title: product.title,
     //         price: product.price,
-    //         basketIndex: index + 1
+    //         index: index + 1
     //     });
-    //     basketItems.push(cardElement)
-    // })
-
-    // const basketElement = basketView.render({
-    //     items: basketItems,
-    //     total: basket.getTotalPrice(),
     // });
 
-    const basketProducts = basket.getProducts();
-
-    const basketItems = basketProducts.map((product, index) => {
-        const card = new CardBasket(cloneTemplate(cardBasketTemplate), events);
-        return card.render({
-            id: product.id,
-            title: product.title,
-            price: product.price,
-            index: index + 1
-        });
-    });
-
-    modal.open(basketView.render({
-        items: basketItems,
-        total: basket.getTotalPrice(),
-    }));
+    modal.open(basketView.render());
 })
 
 // Изменение содержимого корзины

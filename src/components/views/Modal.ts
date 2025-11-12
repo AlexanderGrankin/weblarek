@@ -18,11 +18,16 @@ export class Modal extends Component<IModal>{
         this.contentElement = ensureElement<HTMLElement>('.modal__content', container);
 
         this.closeButtonElement.addEventListener('click', () => this.close());
+        this.container.addEventListener('click', (e) => {
+            if (e.target === this.container) {
+                this.close();
+            }
+        });
     }
 
     open(element: HTMLElement) { 
         this.container.classList.add('modal_active');
-        
+        document.body.style.overflow = 'hidden';
 
         this.contentElement.replaceChildren(element); 
         this.events.emit("modal:open");
@@ -30,6 +35,7 @@ export class Modal extends Component<IModal>{
 
     close() {
         this.container.classList.remove('modal_active');
+        document.body.style.overflow = '';
         if (this.contentElement) {
             this.contentElement.innerHTML = '';
         }
