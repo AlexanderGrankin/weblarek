@@ -9,6 +9,7 @@ export interface ICard{
     title: string; 
     id: string;
     basketIndex?: number;
+    index: number;
 }
 
 export class Card extends Component<ICard> {  

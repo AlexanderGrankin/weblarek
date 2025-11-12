@@ -18,7 +18,7 @@ export class CardBasket extends Card{
         })
     }
 
-    setIndex(value: number) {
+    set index(value: number) {
         this.productIndex.textContent = String(value);
     }
 

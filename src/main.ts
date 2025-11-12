@@ -150,7 +150,7 @@ events.on('basket:changed', () => {
                     id: product.id,
                     title: product.title,
                     price: product.price,
-                    basketIndex: index + 1
+                    index: index + 1
                 });
                 basketItems.push(cardElement);
             });
