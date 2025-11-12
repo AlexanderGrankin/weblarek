@@ -132,7 +132,22 @@ events.on('basket:open', () => {
     //     total: basket.getTotalPrice(),
     // });
 
-    modal.open(basketView.render());
+    const basketProducts = basket.getProducts();
+
+    const basketItems = basketProducts.map((product, index) => {
+        const card = new CardBasket(cloneTemplate(cardBasketTemplate), events);
+        return card.render({
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            index: index + 1
+        });
+    });
+
+    modal.open(basketView.render({
+        items: basketItems,
+        total: basket.getTotalPrice(),
+    }));
 })
 
 // Изменение содержимого корзины
