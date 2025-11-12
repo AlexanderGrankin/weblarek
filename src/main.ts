@@ -138,28 +138,26 @@ events.on('basket:open', () => {
 // Изменение содержимого корзины
 events.on('basket:changed', () => {
     header.counter = basket.getProductsCount();
+    
 
         // const contentType = modal.getCurrentContent();
         // if (contentType && contentType.includes('basket')) {
             const basketProducts = basket.getProducts();
-            const basketItems: HTMLElement[] = [];
 
-            basketProducts.forEach((product, index) => {
+            const basketItems = basketProducts.map((product, index) => {
                 const card = new CardBasket(cloneTemplate(cardBasketTemplate), events);
-                const cardElement = card.render({
+                return card.render({
                     id: product.id,
                     title: product.title,
                     price: product.price,
                     index: index + 1
                 });
-                basketItems.push(cardElement);
             });
 
             basketView.render({
                 items: basketItems,
                 total: basket.getTotalPrice(),
             });
-
             //modal.setContent(basketElement); 
         //}
     
@@ -224,8 +222,8 @@ events.on('contacts:change', (data: { email: string; phone: string; }) => {
     if (data.phone !== undefined) {
         formContacts.phone = data.phone;
     }
-
     buyer.setData(data)
+
     const result = buyer.validate();
 
     const contactsErrors = {
